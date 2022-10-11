@@ -534,6 +534,8 @@ fin_wetl<-lm(log1p(WETL) ~ RSL + as.factor(Tephra), data = fin)
 summary(fin_wetl)
 hist(fin_wetl$residuals)
 #___ no significant variables
+#___ actually, I think sea level is R2=0.7
+
 
 hist(lot$WETL)
 lot_wetl<-lm(log1p(WETL) ~ RSL + as.factor(Tephra), data = lot)
@@ -547,10 +549,11 @@ summary(ngo_wetl)
 hist(ngo_wetl$residuals)
 #___ sea level rise is significant with R² = 0.4.
 
+if(0){
 export_summs(ava_dist, ava_litto, ava_mang, ava_rain, ava_wetl,
                fin_dist, fin_litto, fin_mang, fin_rain, fin_wetl,
-               lot_dist, lot_litto, lot_mang, lot_rain,
-               ngo_dist, ngo_litto, ngo_mang, ngo_rain, ngo_wetl, scale = TRUE, to.file = "xlsx", file.name = "LM_results.xlsx")
+               lot_dist, lot_litto, lot_mang, lot_rain, lot_wetl,
+               ngo_dist, ngo_litto, ngo_mang, ngo_rain, ngo_wetl, scale = TRUE, to.file = "xlsx", file.name = "LM_results.xlsx")}
 
 #___ In addition to the results table the models could be reported in the appendix of the manuscript
 #___ The following package and function could help:
