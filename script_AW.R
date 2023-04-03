@@ -193,10 +193,11 @@ fin_pollen<- fin_pollen[-c(47:48)]
 fin_pollen<- fin_pollen / rowSums(fin_pollen) * 100
 
 lot_meta<-  lot_pollen[c(40:41)]
-lot_pollen<- lot_pollen[-c(6,40:41)]
+lot_pollen<- lot_pollen[-c(40:41)]
 lot_pollen<- lot_pollen / rowSums(lot_pollen) * 100
 
 ngo_meta<-  ngo_pollen[c(56:57)]
+#column 15 removed (Cyperaceae) since it dominates the pollen record. 
 ngo_pollen<- ngo_pollen[-c(15,56:57)]
 ngo_pollen<- ngo_pollen / rowSums(ngo_pollen) * 100
 
@@ -242,7 +243,7 @@ names(spec_group)[6]<-"WETL"
 
 spec_group<-data.frame(spec_group, age_site)
 
-#write.csv(spec_group, "spec_group.csv")
+#write.csv(spec_group, "spec_group2.csv")
 
 # get rid of decimal points since they seem to mess up the LMs later
 spec_group[,1:6]<-spec_group[,1:6]*100
@@ -250,7 +251,7 @@ spec_group[,1:6]<-spec_group[,1:6]*100
 # round up any remaining decimals
 spec_group[,-8] <-round(spec_group[,-8],0)
 
-#re-scale without the UNKN (unknown column)
+#re-scale without the UNKN (unknown, 5th column)
 spec_group<-spec_group[c(1,2,3,4,6,7,8)]
 meta<-spec_group[c(6,7)]
 spec_group<-spec_group[c(1:5)]
@@ -262,8 +263,6 @@ spec_group<-cbind(meta, spec_group)
 
 #Visualize trends####
 #organised by site:
-
-#___ from here tiny things changed
 
 if(1){
   
@@ -329,7 +328,6 @@ if(1){
   
 }
 
-#___ what changed here is to plot polynomials and to change "taxa" to upper case
 
 # organised by vegetation type:
 if(0){
@@ -405,18 +403,6 @@ ava<-merge(ngo_tephra, ava, by="Cal_yrs_BP")
 
 #GLMS####
 #Disturbance
-
-#___ time was removed
-#___ we looked at the distribution of each response variable for each
-#___ island and vegetation type
-
-#___ Manuel and I changed the following: we log-transformed the response
-#___ variables and defined Tephra as a factor.
-#___ we also changed the glms to lms (as it is essentially the same,
-#___ because GLMs with gaussian distributions are basically lms)
-#___ as we now have lms we can report R² values that tell us more
-#___ about the relationship of the response and explanatory variables
-
 hist(ava$DIST)
 ava_dist<-lm(log1p(DIST) ~ RSL + as.factor(Tephra), data = ava)
 summary(ava_dist)
@@ -553,7 +539,7 @@ if(0){
 export_summs(ava_dist, ava_litto, ava_mang, ava_rain, ava_wetl,
                fin_dist, fin_litto, fin_mang, fin_rain, fin_wetl,
                lot_dist, lot_litto, lot_mang, lot_rain, lot_wetl,
-               ngo_dist, ngo_litto, ngo_mang, ngo_rain, ngo_wetl, scale = TRUE, to.file = "xlsx", file.name = "LM_results.xlsx")}
+               ngo_dist, ngo_litto, ngo_mang, ngo_rain, ngo_wetl, scale = TRUE, to.file = "xlsx", file.name = "LM_results_review.xlsx")}
 
 #___ In addition to the results table the models could be reported in the appendix of the manuscript
 #___ The following package and function could help:

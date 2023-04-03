@@ -3,8 +3,8 @@ library(ggplot2)
 library(ggpubr)
 library(tidyr)
 
-spec_group<-read.csv("spec_group.csv")
-spec_group<-spec_group[-c(5)]
+spec_group<-read.csv("spec_group2.csv")
+spec_group<-spec_group[-c(1,6)]
 spec_group[,1:5]<- spec_group[,1:5] / rowSums(spec_group[,1:5]) * 100
 
 names(spec_group)[1]<-"Successional"
